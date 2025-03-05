@@ -1,6 +1,7 @@
 package org.ofdrw.gm.ses.v4;
 
 import org.bouncycastle.asn1.*;
+import org.ofdrw.gm.ses.v1.ExtensionDatas;
 
 import java.io.IOException;
 import java.security.cert.Certificate;
@@ -61,11 +62,13 @@ public class SES_Signature extends ASN1Object {
         toSign = TBS_Sign.getInstance(e.nextElement());
         cert = ASN1OctetString.getInstance(e.nextElement());
         signatureAlgID = ASN1ObjectIdentifier.getInstance(e.nextElement());
-        signature = DERBitString.getInstance(e.nextElement());
+        signature = ASN1BitString.getInstance(e.nextElement());
         if (e.hasMoreElements()) {
             Object obj = e.nextElement();
             if (obj instanceof ASN1TaggedObject) {
-                timeStamp = DERBitString.getInstance(((ASN1TaggedObject) obj).getObject());
+                ASN1TaggedObject obj1 = (ASN1TaggedObject) obj;
+//                extDatas = ExtensionDatas.getInstance(obj1.getBaseUniversal(obj1.isExplicit(),obj1.getTagNo())));
+                timeStamp = ASN1BitString.getInstance(obj1.getBaseUniversal(obj1.isExplicit(),obj1.getTagNo()));
             }
         }
     }

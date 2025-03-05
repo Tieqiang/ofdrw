@@ -41,7 +41,7 @@ public class SES_ESPictrueInfo extends ASN1Object {
     public SES_ESPictrueInfo(
             ASN1Sequence seq) {
         Enumeration<?> e = seq.getObjects();
-        type = DERIA5String.getInstance(e.nextElement());
+        type = (DERIA5String) ASN1IA5String.getInstance(e.nextElement());
         data = ASN1OctetString.getInstance(e.nextElement());
         width = ASN1Integer.getInstance(e.nextElement());
         height = ASN1Integer.getInstance(e.nextElement());

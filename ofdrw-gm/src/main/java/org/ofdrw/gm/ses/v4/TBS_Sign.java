@@ -67,11 +67,12 @@ public class TBS_Sign extends ASN1Object {
         eseal = SESeal.getInstance(e.nextElement());
         timeInfo = ASN1GeneralizedTime.getInstance(e.nextElement());
         dataHash = DERBitString.getInstance(e.nextElement());
-        propertyInfo = DERIA5String.getInstance(e.nextElement());
+        propertyInfo = (DERIA5String) ASN1IA5String.getInstance(e.nextElement());
         if (e.hasMoreElements()) {
             Object obj = e.nextElement();
             if (obj instanceof ASN1TaggedObject) {
-                extDatas = ExtensionDatas.getInstance(((ASN1TaggedObject) obj).getObject());
+                ASN1TaggedObject obj1 = (ASN1TaggedObject) obj;
+                extDatas = ExtensionDatas.getInstance(obj1.getBaseUniversal(obj1.isExplicit(),obj1.getTagNo()));
             }
         }
     }
